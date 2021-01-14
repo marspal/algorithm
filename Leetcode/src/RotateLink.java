@@ -26,11 +26,12 @@ public class RotateLink<E> {
     public void rotateByK(int k){
         Node preNode = null;
         Node currentNode = head;
+        Node nextNode = null;
         ArrayList<Node> startNode = new ArrayList<>();
         ArrayList<Node> endNode = new ArrayList<>();
         int count = 0;
         while (currentNode != null) {
-            Node nextNode = currentNode.next;
+            nextNode = currentNode.next;
             currentNode.next = preNode;
             preNode = currentNode;             currentNode = nextNode;
             currentNode = nextNode;
@@ -40,9 +41,6 @@ public class RotateLink<E> {
             }
             if(count % k == 0 || nextNode == null){
                 endNode.add(preNode);
-            }
-            if (nextNode == null) {
-                break;
             }
         }
         if (k == 1) {
@@ -61,6 +59,34 @@ public class RotateLink<E> {
         }
     }
 
+    public void rotateByK2(int k){
+        head = rotate(head, null);
+    }
+    private Node rotate(Node node, Node pre) {
+        if(node == null){
+            return null;
+        }
+        Node next = node.next;
+        node.next = pre;
+        if(next == null){
+            return node;
+        }
+        return rotate(next, node);
+    }
+
+    public Node oddEvenList(){
+        if (head == null) {
+            return null;
+        }
+        Node evenNode = head.next;
+        Node oddNode = head;
+        Node tempOddNode = null;
+        while (evenNode != null) {
+
+        }
+        return head;
+    }
+
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder();
@@ -77,7 +103,8 @@ public class RotateLink<E> {
     public static void main(String[] args) {
         Integer[] test = {1,2,3,4,5,6,7,8,9,10,11};
         RotateLink node = new RotateLink<Integer>(test);
-        node.rotateByK(3);
+//        node.rotateByK(3);
+        node.rotateByK2(3);
         System.out.println(node);
     }
 }
