@@ -6,7 +6,7 @@
  *
  * @param <E>
  */
-public class BST<E extends Comparable> {
+public class BST<E extends Comparable<E>> {
     private class Node {
         public E e;
         public Node left, right;

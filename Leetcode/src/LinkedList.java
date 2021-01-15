@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class RotateLink<E> {
+public class LinkedList<E> {
     private class Node {
         public E e;
         public Node next;
@@ -14,7 +14,7 @@ public class RotateLink<E> {
     }
     public Node head;
     public int size;
-    public RotateLink(E[] list){
+    public LinkedList(E[] list){
         Node dummyHead = new Node(null);
         for(int i = list.length - 1; i >= 0; i--) {
             Node temp = new Node(list[i], dummyHead.next);
@@ -90,6 +90,41 @@ public class RotateLink<E> {
         return head;
     }
 
+    // 92号问题
+    public void reverseBetween(int m, int n){
+        if(head == null){
+            return;
+        }
+        Node preStart = null, start = null;
+        Node pre = null, next = null;
+        Node current = head;
+        int count = 1;
+        while(count <= n && current != null){
+            if(count + 1 == m){
+                preStart = current;
+            }
+            if(count == m){
+                start = current;
+            }
+            next = current.next;
+            if(count >= m && count <= n){
+                current.next = pre;
+                pre = current;
+                if(count == n){
+                    start.next = next;
+                    if(preStart != null){
+                        preStart.next = current;
+                        return;
+                    }
+                    head = pre;
+                    return;
+                }
+            }
+            current = next;
+            count++;
+        }
+    }
+
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder();
@@ -104,12 +139,13 @@ public class RotateLink<E> {
     }
 
     public static void main(String[] args) {
-        Integer[] test = {1,2,3,4,5,6,7,8,9,10,11};
-        RotateLink node = new RotateLink<Integer>(test);
+        Integer[] test = {1,2,3,4,5};
+        LinkedList node = new LinkedList<Integer>(test);
 //        node.rotateByK(3);
 //        node.rotateByK2(3);
         System.out.println(node);
-        node.oddEvenList();
+//        node.oddEvenList();
+        node.reverseBetween(2, 4);
         System.out.println(node);
     }
 }
