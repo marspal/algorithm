@@ -139,7 +139,7 @@ public class LinkedList<E> {
     }
 
     public static void main(String[] args) {
-        Integer[] test = {1,2,3,4,5};
+        Integer[] test = {1,2,3,4,5,6};
         LinkedList node = new LinkedList<Integer>(test);
 //        node.rotateByK(3);
 //        node.rotateByK2(3);
