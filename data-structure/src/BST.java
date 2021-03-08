@@ -82,9 +82,10 @@ public class BST<E extends Comparable<E>> {
         // 先用深度遍历
         ArrayList<Node> arr = new ArrayList<>();
         preOrder(root, arr);
-        Queue<Node> q1 = new
+//        Queue<Node> q1 = new
 //        while () {
 //
 //        }
+        return "";
     }
 }
