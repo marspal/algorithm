@@ -9,7 +9,12 @@ import jdk.internal.org.objectweb.asm.tree.analysis.Value;
  *    4. 如果一个节点是红色的,那么他的孩子节点都是黑色的
  *    5. 从任意一个节点到叶子节点, 经过的黑色节点是一样的
  *
- * 严格意义上讲: 不是平衡二叉树,最大高度:2logn logn 黑色节点+ logn 红色节点
+ * 严格意义上讲: 不是平衡二叉树,最大高度:2logn logn 黑色节点+ logn 红色节点; 统计性能最优比AVL更好
+ *
+ * 扩展: Splay Tree(伸展树)
+ *  局部性原理: 刚被访问的内容下次高概率被访问
+ *
+ *  基于红黑树: Map Set; 其它实现
  */
 public class RBTree<K extends Comparable<K>, V> {
     public static final boolean RED = true;
@@ -42,8 +47,63 @@ public class RBTree<K extends Comparable<K>, V> {
         return size;
     }
 
+    public boolean isEmpty(){
+        return size == 0;
+    }
+
+    private boolean isRed(Node node){
+        if(node == null){
+            return BLACK;
+        }
+        return node.color;
+    }
+
+    //   node                     x
+    //  /   \     左旋转         /  \
+    // T1   x   --------->   node   T3
+    //     / \              /   \
+    //    T2 T3            T1   T2
+
+    private Node leftRotate(Node node){
+        Node x = node.right;
+
+        // 左旋转
+        node.right = x.left;
+        x.left = node;
+        
+        x.color = node.color;
+        node.color = RED;
+
+        return x;
+    }
+
+    //     node                   x
+    //    /   \     右旋转       /  \
+    //   x    T2   ------->   y   node
+    //  / \                       /  \
+    // y  T1                     T1  T2
+
+    private Node rightRotate(Node node){
+        Node x = node.left;
+
+        node.left = x.right;
+        x.right = node;
+
+        x.color = node.color;
+        node.color = RED;
+        return x;
+    }
+
+    // 颜色翻转
+    private void flipColors(Node node){
+        node.color = RED;
+        node.left.color = BLACK;
+        node.right.color = BLACK;
+    }
+
     public void add(K key, V value) {
         root = add(root, key, value);
+        root.color = BLACK;
     }
 
     private Node add(Node node, K key, V value){
@@ -58,6 +118,19 @@ public class RBTree<K extends Comparable<K>, V> {
         } else {
             node.value = value;
         }
+
+        if(isRed(node.right) && !isRed(node.left)){
+            node = leftRotate(node);
+        }
+
+        if(isRed(node.left) && isRed(node.left.left)){
+            node = rightRotate(node);
+        }
+
+        if(isRed(node.left) && isRed(node.right)){
+             flipColors(node);
+        }
+
         return node;
     }
 
@@ -78,7 +151,7 @@ public class RBTree<K extends Comparable<K>, V> {
         return getNode(root, key) != null;
     }
 
-    public V getValue(K key){
+    public V get(K key){
         Node node = getNode(root, key);
         return node != null ? node.value : null;
     }
