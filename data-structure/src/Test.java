@@ -1,9 +1,24 @@
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class Test {
     public static final String filename = "./src/pride-and-prejudice";
 
+    public static void BSTTest() {
+        BST<Integer, Integer> bst = new BST<>();
+        int[] nums = {5, 3, 6, 8, 4, 2};
+        for(int num: nums){
+            bst.add(num, num);
+        }
+        bst.preOrder();
+        System.out.println();
+
+        bst.inOrder();
+        System.out.println();
+
+        bst.postOrder();
+    }
     public static void AVRTreeTest(){
         System.out.println("AVLTree Test");
         ArrayList<String> words = new ArrayList<>();
@@ -42,12 +57,12 @@ public class Test {
             System.out.println("Frequency of prejudice: " + rbTree.get("prejudice"));
         }
     }
+
     public static void TreePerformance(){
         ArrayList<String> words = new ArrayList<>();
         if(FileOperation.readFile(filename, words)){
-            long startTime = System.nanoTime();
-
             // AVLTree
+            long startTime = System.nanoTime();
             AVLTree<String, Integer> avl = new AVLTree<>();
             for(String word: words){
                 if(avl.contains(word)){
@@ -63,7 +78,27 @@ public class Test {
             double time = (endTime - startTime) / 1000000000.0;
             System.out.println("AVL: " + time + " s");
 
+            // BSTTree
+            startTime = System.nanoTime();
+            BST<String, Integer> bst = new BST<>();
+
+            for(String word: words){
+                if(bst.contains(word)){
+                    bst.set(word, bst.get(word) + 1);
+                } else {
+                    bst.add(word, 1);
+                }
+            }
+
+            for(String word: words){
+                bst.contains(word);
+            }
+            endTime = System.nanoTime();
+            time = (endTime - startTime) / 1000000000.0;
+            System.out.println("BST: "+ time + " s");
+
             // RBTree
+            startTime = System.nanoTime();
             RBTree<String, Integer> rbTree = new RBTree<>();
             for(String word: words){
                 if(rbTree.contains(word)){
@@ -118,7 +153,9 @@ public class Test {
     public static void main(String[] args) {
 //        Test.AVRTreeTest();
 //        Test.RBTressTest();
-//        Test.TreePerformance();
-        Test.TreePerformance2();
+        Test.TreePerformance();
+//        Test.TreePerformance2();
+
+//        Test.BSTTest();
     }
 }

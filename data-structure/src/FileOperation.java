@@ -48,7 +48,7 @@ public class FileOperation {
     }
     private static int firstCharacterIndex(String s, int start){
         for( int i = start ; i < s.length() ; i ++ )
-            if( Character.isLetter(s.charAt(i)) )
+            if(Character.isLetter(s.charAt(i)))
                 return i;
         return s.length();
     }
