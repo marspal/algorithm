@@ -10,14 +10,47 @@ public class MergeSort {
         sort(arr, 0, arr.length - 1);
     }
 
-    public static <E extends Comparable<E>> void sort(E[] arr, int l, int r){
+    public static <E extends Comparable<E>> void sort(E[] arr, int l, int r) {
         if(l >= r){
             return;
         }
         int mid = l + (r - l) / 2;
         sort(arr, l, mid);
-        sort(arr,mid+1, r);
+        sort(arr, mid+1, r);
         merge(arr, l, mid, r);
+    }
+
+    public static <E extends Comparable<E>> void sort2(E[] arr){
+        sort2(arr, 0, arr.length - 1);
+    }
+
+    private static <E extends Comparable<E>> void sort2(E[] arr, int l, int r) {
+        if(l >= r){
+            return;
+        }
+        int mid = l + (r - l) / 2;
+        sort2(arr, l, mid);
+        sort2(arr,mid+1, r);
+        if(arr[mid].compareTo(arr[mid + 1]) > 0){
+            merge(arr, l, mid, r);
+        }
+    }
+
+    public static <E extends Comparable<E>> void sort3(E[] arr){
+        sort3(arr, 0, arr.length - 1);
+    }
+
+    private static <E extends Comparable<E>> void sort3(E[] arr, int l, int r) {
+        if(r - l <= 15){
+            InsertionSort.sort(arr, l, r);
+            return;
+        }
+        int mid = l + (r-l) / 2;
+        sort3(arr, l, mid);
+        sort3(arr, mid + 1, r);
+        if(arr[mid].compareTo(arr[mid + 1]) > 0){
+            merge(arr, l, mid, r);
+        }
     }
 
     private static <E extends Comparable<E>> void merge(E[] arr, int l, int mid, int r){
@@ -26,15 +59,14 @@ public class MergeSort {
         int i = l, j = mid + 1;
         // 每轮循环为arr[k] 赋值
         for(int k = l; k <= r; k++) {
-            if(temp[i - l].compareTo(temp[j-l]) <= 0){
-                arr[k] = temp[i - l]; ++i;
-            } else if(temp[i-l].compareTo(temp[j-1]) > 0) {
+            if(i > mid){
                 arr[k] = temp[j - l]; ++j;
-            } else if(i > mid) {
-                arr[k] = temp[j - l];
-                ++j;
-            } else  {
-                arr[k] = temp[i-l]; ++i;
+            } else if(j > r){
+                arr[k] = temp[i - l]; ++i;
+            } else if(temp[i-l].compareTo(temp[j-l]) <= 0){
+                arr[k] = temp[i - l]; ++i;
+            } else {
+                arr[k] = temp[j - l]; ++j;
             }
         }
     }

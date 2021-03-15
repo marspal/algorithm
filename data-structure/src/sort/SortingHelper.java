@@ -15,8 +15,9 @@ public class SortingHelper {
     }
 
     public static <E extends Comparable<E>> void sortTest(String sortname, E[] arr){
-
+        // 拷贝数据
         E[] data = Arrays.copyOfRange(arr, 0, arr.length);
+
         long startTime = System.nanoTime();
         if(sortname.equals("SelectionSort")){
             SelectionSort.sort(data);
@@ -24,6 +25,12 @@ public class SortingHelper {
             InsertionSort.sort(data);
         } else if(sortname.equals("InsertionSort2")){
             InsertionSort.sort2(data);
+        } else if(sortname.equals("MergeSort")){
+            MergeSort.sort(data);
+        } else if(sortname.equals("MergeSort2")){
+            MergeSort.sort2(data);
+        }else if(sortname.equals("MergeSort3")){
+            MergeSort.sort3(data);
         }
 
         long endTime = System.nanoTime();
