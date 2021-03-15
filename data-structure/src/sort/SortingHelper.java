@@ -31,6 +31,10 @@ public class SortingHelper {
             MergeSort.sort2(data);
         }else if(sortname.equals("MergeSort3")){
             MergeSort.sort3(data);
+        } else if(sortname.equals("QuickSort")){
+            QuickSort.sort(data);
+        } else if(sortname.equals("QuickSort2")){
+            QuickSort.sort2(data);
         }
 
         long endTime = System.nanoTime();
