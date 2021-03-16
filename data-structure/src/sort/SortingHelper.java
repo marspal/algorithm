@@ -35,6 +35,10 @@ public class SortingHelper {
             QuickSort.sort(data);
         } else if(sortname.equals("QuickSort2")){
             QuickSort.sort2(data);
+        }else if(sortname.equals("QuickSort3")){
+            QuickSort.sort2Way(data);
+        }else if(sortname.equals("QuickSort4")){
+            QuickSort.sort3Way(data);
         }
 
         long endTime = System.nanoTime();
